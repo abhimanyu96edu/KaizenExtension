@@ -1,40 +1,5 @@
-window.onclick = e => {
-    var count = 0;
-    var value;
-    
-    if((e.target.tagName==="BUTTON")){
-    value=e.target.getAttribute("id").slice(4,5);
-    var x = "card" + value + "-img";
-    console.log(document.getElementById(x));
-    if(value==="1")
-    {
-        count++;
-        
-    }
-    else if(value==="2"){
-        count++
-    }
-    else if(value==="3"){
-        count++
-    }
-    else if(value==="4"){
-        count++
-    }
-    else if(value==="5"){
-        count++
-    }
-    else if(value==="6"){
-        count++
-    } 
-}
-  
-}
-
-
-
-
 // firebase 
-/*const firebaseConfig = {
+const firebaseConfig = {
     apiKey: "AIzaSyB8v7HnmF2pttQcp5B1AvJ4N1Dd5mAoQew",
     authDomain: "kaizen-f0bb3.firebaseapp.com",
     databaseURL: "https://kaizen-f0bb3-default-rtdb.firebaseio.com",
@@ -47,15 +12,46 @@ window.onclick = e => {
 // initialize firebase
 firebase.initializeApp(firebaseConfig);
 
-// reference your database
-var userEventDB = firebase.database().ref("userEvent");
+//console.log(firebase);
 
-const sendUserData = (id, title, count) => {
-  var newContactForm = contactFormDB.push();
+var db = firebase.firestore();
 
-  newContactForm.set({
-    id: id,
-    title: title,
-    count: count,
-  });
-};*/
+chrome.runtime.onMessage.addListener((msg, sender, response) => {
+
+    if(msg.command == "post"){
+        var title = msg.data.title;
+        var count = msg.data.count;
+        var imageSrc = msg.data.imageSrc;
+        var buttonText = msg.data.popupButtonText;
+
+        //console.log(title, count, imageSrc, buttonText);
+        const docRefer = db.collection("userEvents").doc(title);
+        docRefer.get().then((snapshot) => {
+          if(snapshot.exists){
+            docRefer.update({
+              count: firebase.firestore.FieldValue.increment(1)
+            }).then(()=>{
+              console.log('successful')
+            })
+            .catch((error)=>{
+              console.log("error: ", error);
+            });
+          } else{
+            docRefer.set({
+              count: count,
+              imageSrc: imageSrc,
+              buttonText: buttonText
+            }, {merge: true})
+            .then(()=>{
+              console.log('successful')
+            })
+            .catch((error)=>{
+              console.log("error: ", error);
+            });
+          }
+        });
+    }
+
+    response({ data: "Hey!" });
+    return true;
+});

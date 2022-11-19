@@ -14,4 +14,10 @@ p {
     border-radius: 6px;
     border: 1px solid lightblue;
     padding: 10px;
+    text-align: center;
+}
+
+img {
+    height: 200px;
+    width: 200px;
 }

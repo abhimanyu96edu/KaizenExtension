@@ -5,11 +5,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <title>Kaizen</title>
 </head>
 <body>
-    <p id="title">Loading...</p>
-    <script src="script.js"></script>
-   <!-- <script src="checkClick.js"></script> -->
+    <article id="card" class="card-m">
+        <img id="image" style="visibility:hidden">
+        <div  class="text-m">
+          <p id="title">Loading...</p>
+        </div>
+      </article>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="./script.js"></script>
 </body>
 </html>
